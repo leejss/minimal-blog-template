@@ -1,6 +1,7 @@
 ---
 import { SITE } from "@/config";
 import "../styles/globals.css";
+import ThemeSetting from "@/components/theme-setting.astro";
 interface Props {
   title?: string;
 }
@@ -35,12 +36,83 @@ const getTitle = () => {
       crossorigin
     />
     <title>{getTitle()}</title>
+    <script is:inline>
+      (function () {
+        function getInitialTheme() {
+          const savedTheme = localStorage.getItem("blog-theme");
+          if (savedTheme) {
+            return savedTheme;
+          }
+
+          const prefersDark = window.matchMedia(
+            "(prefers-color-scheme: dark)",
+          ).matches;
+          return prefersDark ? "dark" : "light";
+        }
+
+        const theme = getInitialTheme();
+        document.documentElement.setAttribute("data-theme", theme);
+        window
+          .matchMedia("(prefers-color-scheme: dark)")
+          .addEventListener("change", (e) => {
+            if (localStorage.getItem("blog-theme") === null) {
+              localStorage.setItem("blog-theme", e.matches ? "dark" : "light");
+            }
+          });
+      })();
+    </script>
   </head>
   <body>
-    <nav>
-      <a href="/">Home</a>
-      <a href="/blog">Blog</a>
+    <nav class="floating-nav">
+      <div class="nav-container">
+        <a href="/" class="nav-link">HOME</a>
+        <a href="/blog" class="nav-link">BLOG</a>
+      </div>
+      <ThemeSetting />
     </nav>
     <slot />
   </body>
 </html>
+
+<style>
+  .floating-nav {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    z-index: 100;
+  }
+
+  .nav-container {
+    border: 2px solid #000;
+    background: #fff;
+    padding: 0.5rem;
+  }
+
+  .nav-link {
+    display: inline-block;
+    color: #000;
+    text-decoration: none;
+    padding: 0.25rem 0.5rem;
+    font-weight: bold;
+    font-size: 0.875rem;
+    letter-spacing: 1px;
+  }
+
+  .nav-link:hover {
+    background: #000;
+    color: #fff;
+  }
+
+  .nav-link + .nav-link {
+    margin-left: 0.25rem;
+  }
+
+  @media (max-width: 768px) {
+    .floating-nav {
+      top: auto;
+      bottom: 1rem;
+      right: 50%;
+      transform: translateX(50%);
+    }
+  }
+</style>

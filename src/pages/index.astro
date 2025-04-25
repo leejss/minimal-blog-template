@@ -17,6 +17,9 @@ import Root from "../layout/root.astro";
     width: 100%;
     display: grid;
     place-items: center;
+    background-color: var(--default-bg-color);
+
+    transition: color 0.3s ease;
   }
   .container {
     width: min(100% - 2rem, 70ch);
@@ -26,5 +29,6 @@ import Root from "../layout/root.astro";
   .title {
     text-align: center;
     font-size: 7rem;
+    color: var(--default-text-color);
   }
 </style>

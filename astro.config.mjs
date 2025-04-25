@@ -1,5 +1,5 @@
 // @ts-check
-import { SITE } from "@/config";
+import { SITE } from "./src/config";
 import { defineConfig } from "astro/config";
 
 // https://astro.build/config

@@ -1,0 +1,13 @@
+:root {
+  --default-text-color: #000;
+  --default-bg-color: #fff;
+  --default-border-color: #ddd;
+  --default-shadow-color: #ddd;
+}
+
+[data-theme="dark"] {
+  --default-text-color: #fff;
+  --default-bg-color: #000;
+  --default-border-color: #333;
+  --default-shadow-color: #333;
+}
