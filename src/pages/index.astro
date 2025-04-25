@@ -2,6 +2,29 @@
 import Root from "../layout/root.astro";
 ---
 
-<Root title="main">
-  <h1>hl</h1>
+<Root>
+  <main class="main">
+    <div class="container">
+      <h1 class="title">Hello World</h1>
+    </div>
+  </main>
 </Root>
+
+<style>
+  .main {
+    min-height: 100vh;
+    min-height: 100dvh;
+    width: 100%;
+    display: grid;
+    place-items: center;
+  }
+  .container {
+    width: min(100% - 2rem, 70ch);
+    margin-inline: auto;
+  }
+
+  .title {
+    text-align: center;
+    font-size: 7rem;
+  }
+</style>

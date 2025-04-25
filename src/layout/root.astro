@@ -1,9 +1,17 @@
 ---
+import { SITE } from "@/config";
 import "../styles/globals.css";
 interface Props {
-  title: string;
+  title?: string;
 }
+
 const { title } = Astro.props;
+const getTitle = () => {
+  if (title) {
+    return `${SITE.title} | ${title}`;
+  }
+  return SITE.title;
+};
 ---
 
 <html lang="en">
@@ -12,7 +20,21 @@ const { title } = Astro.props;
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
-    <title>{title}</title>
+    <link
+      rel="preload"
+      href="/fonts/AtkinsonHyperlegible-Regular.ttf"
+      as="font"
+      type="font/ttf"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/AtkinsonHyperlegible-Bold.ttf"
+      as="font"
+      type="font/ttf"
+      crossorigin
+    />
+    <title>{getTitle()}</title>
   </head>
   <body>
     <nav>
