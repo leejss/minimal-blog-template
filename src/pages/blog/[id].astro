@@ -1,6 +1,7 @@
 ---
 import Root from "@/layout/root.astro";
 import { getCollection, render } from "astro:content";
+
 export async function getStaticPaths() {
   const posts = await getCollection("post");
   const paths = posts.map((post) => ({
@@ -9,12 +10,58 @@ export async function getStaticPaths() {
   }));
   return paths;
 }
-
 const { post } = Astro.props;
 const { Content } = await render(post);
+const { title, publishedAt, tags } = post.data;
 ---
 
 <Root title="blog">
-  <h1>{post.data.title}</h1>
-  <Content />
+  <article class="container">
+    <header class="header">
+      <h1 class="title">{title}</h1>
+      <div class="meta">
+        {
+          publishedAt && (
+            <span>
+              <time datetime={publishedAt.toISOString()}>
+                {publishedAt.toLocaleDateString("ko-KR", {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                })}
+              </time>
+            </span>
+          )
+        }
+      </div>
+    </header>
+
+    <Content />
+  </article>
 </Root>
+
+<style>
+  .container {
+    width: min(100% - 2rem, 70ch);
+    margin-inline: auto;
+  }
+
+  .header {
+    display: grid;
+    place-items: center;
+  }
+
+  .header .title {
+    font-size: 4rem;
+    font-weight: bold;
+    color: var(--default-text-color);
+  }
+  .meta {
+    display: flex;
+    gap: 1rem;
+    margin: 1rem 0 2rem;
+    font-size: 0.9rem;
+    color: var(--default-text-color);
+    opacity: 0.8;
+  }
+</style>
