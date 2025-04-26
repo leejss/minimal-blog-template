@@ -12,4 +12,11 @@ export default defineConfig({
       },
     },
   },
+
+  markdown: {
+    shikiConfig: {
+      theme: "kanagawa-dragon",
+      wrap: true,
+    },
+  },
 });
