@@ -1,7 +1,6 @@
 ---
 import { SITE } from "@/config";
 import "../styles/globals.css";
-import ThemeSetting from "@/components/theme-setting.astro";
 
 interface Props {
   title?: string;
@@ -16,7 +15,7 @@ const getTitle = () => {
 };
 ---
 
-<html lang="en">
+<html>
   <head>
     <meta charset="utf-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -40,15 +39,17 @@ const getTitle = () => {
     <script is:inline>
       (function () {
         function getInitialTheme() {
-          const savedTheme = localStorage.getItem("blog-theme");
-          if (savedTheme) {
-            return savedTheme;
-          }
+          // const savedTheme = localStorage.getItem("blog-theme");
+          // if (savedTheme) {
+          //   return savedTheme;
+          // }
 
-          const prefersDark = window.matchMedia(
-            "(prefers-color-scheme: dark)",
-          ).matches;
-          return prefersDark ? "dark" : "light";
+          // const prefersDark = window.matchMedia(
+          //   "(prefers-color-scheme: dark)",
+          // ).matches;
+          // return prefersDark ? "dark" : "light";
+
+          return "dark";
         }
 
         const theme = getInitialTheme();
@@ -64,56 +65,76 @@ const getTitle = () => {
     </script>
   </head>
   <body>
-    <nav class="floating-nav">
+    <nav class="floating">
       <div class="nav-container">
-        <a href="/" class="nav-link">HOME</a>
-        <a href="/blog" class="nav-link">BLOG</a>
+        <div class="nav-links">
+          <a href="/" class="nav-link">HOME</a>
+          <a href="/blog" class="nav-link">BLOG</a>
+        </div>
       </div>
-      <ThemeSetting />
+      <!-- <ThemeSetting /> -->
     </nav>
-    <slot />
+    <div class="slot">
+      <slot />
+    </div>
   </body>
 </html>
 
 <style>
-  .floating-nav {
+  .floating {
     position: fixed;
-    top: 1rem;
-    right: 1rem;
+    top: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
     z-index: 100;
+    width: min(100% - 2rem, 1200px);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
   }
 
   .nav-container {
-    border: 2px solid #000;
-    background: #fff;
+    background: var(--default-bg-color);
     padding: 0.5rem;
+    border-radius: 3rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 0.25rem;
   }
 
   .nav-link {
     display: inline-block;
-    color: #000;
+    color: var(--default-text-color);
     text-decoration: none;
-    padding: 0.25rem 0.5rem;
-    font-weight: bold;
+    padding: 0.5rem 1.25rem;
+    font-weight: 500;
     font-size: 0.875rem;
     letter-spacing: 1px;
+    border-radius: 2rem;
+    transition: all 0.2s ease;
   }
 
   .nav-link:hover {
-    background: #000;
-    color: #fff;
+    background: var(--default-text-color);
+    color: var(--default-bg-color);
   }
 
-  .nav-link + .nav-link {
-    margin-left: 0.25rem;
+  .slot {
+    padding-top: 6rem;
   }
 
   @media (max-width: 768px) {
-    .floating-nav {
+    .floating {
       top: auto;
-      bottom: 1rem;
-      right: 50%;
-      transform: translateX(50%);
+      bottom: 2rem;
+    }
+
+    .slot {
+      padding-top: 0;
+      padding-bottom: 6rem;
     }
   }
 </style>

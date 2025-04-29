@@ -1,157 +1,97 @@
-<div class="theme-settings">
-  <button id="theme-settings-toggle" aria-label="테마 설정">
-    <span class="icon">⚙️</span>
+<div class="theme-container">
+  <button id="theme-toggle" class="theme-button" aria-label="테마 변경">
+    <span class="icon light">☀️</span>
+    <span class="icon dark">🌙</span>
   </button>
-
-  <div class="theme-dropdown">
-    <div class="theme-option">
-      <button id="theme-light" data-theme="light">
-        <span class="icon">☀️</span> 라이트 모드
-      </button>
-    </div>
-    <div class="theme-option">
-      <button id="theme-dark" data-theme="dark">
-        <span class="icon">🌙</span> 다크 모드
-      </button>
-    </div>
-    <div class="theme-option">
-      <button id="theme-system">
-        <span class="icon">💻</span> 시스템 설정 사용
-      </button>
-    </div>
-  </div>
 </div>
 
 <style>
-  .theme-settings {
-    position: relative;
+  .theme-container {
+    background: var(--default-bg-color);
+    padding: 0.5rem;
+    border-radius: 3rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   }
 
-  #theme-settings-toggle {
-    background: none;
+  .theme-button {
+    background: transparent;
     border: none;
-    font-size: 1.5rem;
+    border-radius: 2rem;
+    padding: 0.5rem 1.25rem;
+    font-weight: 500;
+    font-size: 0.875rem;
+    letter-spacing: 1px;
     cursor: pointer;
-    padding: 0.5rem;
-  }
-
-  .theme-dropdown {
-    position: absolute;
-    top: 100%;
-    right: 0;
-    width: 200px;
-    background-color: var(--color-bg);
-    border: 1px solid var(--color-border);
-    border-radius: 0.5rem;
-    padding: 0.5rem;
-    display: none;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    z-index: 100;
-  }
-
-  .theme-settings.open .theme-dropdown {
-    display: block;
-  }
-
-  .theme-option {
-    margin: 0.25rem 0;
-  }
-
-  .theme-option button {
+    transition: all 0.2s ease;
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 0.5rem;
-    width: 100%;
-    background: none;
-    border: none;
-    padding: 0.5rem;
-    text-align: left;
-    cursor: pointer;
     color: var(--default-text-color);
-    border-radius: 0.25rem;
   }
 
-  .theme-option button:hover {
-    background-color: var(--default-border-color);
-  }
-
-  .theme-option button.active {
-    background-color: var(--color-primary);
-    /* color: white; */
-    color: greenyellow;
+  .theme-button:hover {
+    background: var(--default-text-color);
+    color: var(--default-bg-color);
   }
 
   .icon {
+    font-size: 1rem;
+    line-height: 1;
+  }
+
+  /* 라이트/다크 모드에 따라 아이콘 표시 */
+  .icon.light {
+    display: none;
+  }
+
+  .icon.dark {
     display: inline-block;
-    width: 1.5rem;
-    text-align: center;
+  }
+
+  html[data-theme="dark"] .icon.light {
+    display: inline-block;
+  }
+
+  html[data-theme="dark"] .icon.dark {
+    display: none;
+  }
+
+  /* 포커스 효과 */
+  .theme-button:focus-visible {
+    outline: 2px solid var(--default-text-color);
+    outline-offset: 2px;
+  }
+
+  @media (max-width: 768px) {
+    .theme-button {
+      padding: 0.5rem 1rem;
+      font-size: 0.75rem;
+    }
+
+    .icon {
+      font-size: 0.875rem;
+    }
   }
 </style>
 
 <script>
-  import { saveTheme } from "@/utils/theme";
-  const settingsToggle = document.getElementById("theme-settings-toggle");
-  const settingsContainer = document.querySelector(".theme-settings");
-  const lightButton = document.getElementById("theme-light");
-  const darkButton = document.getElementById("theme-dark");
-  const systemButton = document.getElementById("theme-system");
+  import { getTheme, saveTheme } from "@/utils/theme";
 
-  // 현재 활성화된 테마 표시
-  function updateActiveButton() {
-    const savedTheme = localStorage.getItem("theme");
-    const buttons = [lightButton, darkButton, systemButton];
+  const themeToggle = document.getElementById(
+    "theme-toggle",
+  ) as HTMLButtonElement;
 
-    buttons.forEach((btn) => btn?.classList.remove("active"));
-
-    if (!savedTheme) {
-      systemButton?.classList.add("active");
-    } else if (savedTheme === "light") {
-      lightButton?.classList.add("active");
-    } else if (savedTheme === "dark") {
-      darkButton?.classList.add("active");
-    }
-  }
-
-  // 클릭 이벤트 등록
-  settingsToggle?.addEventListener("click", () => {
-    settingsContainer?.classList.toggle("open");
-    updateActiveButton();
+  themeToggle?.addEventListener("click", () => {
+    const currentTheme = getTheme();
+    const newTheme = currentTheme === "light" ? "dark" : "light";
+    saveTheme(newTheme);
   });
 
-  // 테마 버튼 클릭 이벤트
-  lightButton?.addEventListener("click", () => {
-    saveTheme("light");
-    updateActiveButton();
-    settingsContainer?.classList.remove("open");
-  });
-
-  darkButton?.addEventListener("click", () => {
-    saveTheme("dark");
-    updateActiveButton();
-    settingsContainer?.classList.remove("open");
-  });
-
-  systemButton?.addEventListener("click", () => {
-    localStorage.removeItem("theme");
-
-    // 시스템 테마 즉시 적용
-    const prefersDark = window.matchMedia(
-      "(prefers-color-scheme: dark)",
-    ).matches;
-    const systemTheme = prefersDark ? "dark" : "light";
-    saveTheme(systemTheme);
-
-    updateActiveButton();
-    settingsContainer?.classList.remove("open");
-  });
-
-  // 외부 클릭 시 드롭다운 닫기
-  document.addEventListener("click", (e) => {
-    if (settingsContainer && !settingsContainer.contains(e.target as Node)) {
-      settingsContainer.classList.remove("open");
+  themeToggle?.addEventListener("keydown", (e) => {
+    if (e.key === " " || e.key === "Enter") {
+      e.preventDefault();
+      themeToggle.click();
     }
   });
-
-  // 초기화
-  updateActiveButton();
 </script>
