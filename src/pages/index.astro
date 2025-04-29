@@ -1,11 +1,12 @@
 ---
+import { SITE } from "@/config";
 import Root from "../layout/root.astro";
 ---
 
 <Root>
   <main class="main">
     <div class="container">
-      <h1 class="title">Hello World</h1>
+      <h1 class="title">{SITE.title}</h1>
     </div>
   </main>
 </Root>
