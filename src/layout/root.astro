@@ -1,6 +1,7 @@
 ---
 import { SITE } from "@/config";
 import "../styles/globals.css";
+import ThemeSetting from "@/components/theme-setting.astro";
 
 interface Props {
   title?: string;
@@ -39,17 +40,14 @@ const getTitle = () => {
     <script is:inline>
       (function () {
         function getInitialTheme() {
-          // const savedTheme = localStorage.getItem("blog-theme");
-          // if (savedTheme) {
-          //   return savedTheme;
-          // }
-
-          // const prefersDark = window.matchMedia(
-          //   "(prefers-color-scheme: dark)",
-          // ).matches;
-          // return prefersDark ? "dark" : "light";
-
-          return "dark";
+          const savedTheme = localStorage.getItem("blog-theme");
+          if (savedTheme) {
+            return savedTheme;
+          }
+          const prefersDark = window.matchMedia(
+            "(prefers-color-scheme: dark)",
+          ).matches;
+          return prefersDark ? "dark" : "light";
         }
 
         const theme = getInitialTheme();
@@ -72,7 +70,9 @@ const getTitle = () => {
           <a href="/blog" class="nav-link">BLOG</a>
         </div>
       </div> -->
-      <!-- <ThemeSetting /> -->
+      <div class="theme-setting-wrapper">
+        <ThemeSetting />
+      </div>
     </nav>
     <div class="slot-container">
       <slot />
@@ -91,6 +91,10 @@ const getTitle = () => {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
+  }
+
+  .theme-setting-wrapper {
+    margin-left: auto;
   }
 
   .nav-container {
