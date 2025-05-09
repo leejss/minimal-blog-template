@@ -1,15 +1,16 @@
 ---
 import Root from "@/layout/root.astro";
+import { formatPublishedAt } from "@/utils/common";
 import { getCollection } from "astro:content";
 
-const posts = await getCollection("post");
+const notes = await getCollection("note");
 ---
 
 <Root title="blog">
   <main class="container">
     <ul class="post-list">
       {
-        posts.map((post) => {
+        notes.map((post) => {
           return (
             <li class="post-item">
               <a href={`/notes/${post.id}`} class="post-link">
@@ -19,19 +20,8 @@ const posts = await getCollection("post");
                     datetime={post.data.publishedAt.toISOString()}
                     class="post-date"
                   >
-                    {post.data.publishedAt.toLocaleDateString("ko-KR", {
-                      year: "numeric",
-                      month: "long",
-                      day: "numeric",
-                    })}
+                    {formatPublishedAt(post.data.publishedAt)}
                   </time>
-                )}
-                {post.data.tags && (
-                  <div class="post-tags">
-                    {post.data.tags.map((tag) => (
-                      <span class="tag">#{tag}</span>
-                    ))}
-                  </div>
                 )}
               </a>
             </li>
@@ -94,18 +84,5 @@ const posts = await getCollection("post");
     font-size: 0.9rem;
     color: var(--default-text-color);
     opacity: 0.8;
-  }
-
-  .post-tags {
-    display: flex;
-    gap: 0.5rem;
-    margin-top: 1rem;
-    flex-wrap: wrap;
-  }
-
-  .tag {
-    font-size: 0.8rem;
-    color: var(--default-text-color);
-    opacity: 0.7;
   }
 </style>
