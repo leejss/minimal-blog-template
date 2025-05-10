@@ -1,5 +1,7 @@
 # Minimal Blog Template
 
+![Blog Screenshot](public/page.png)
+
 ## How to use
 
 ### 블로그 글 작성하기
