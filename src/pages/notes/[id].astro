@@ -35,8 +35,9 @@ const { title, publishedAt } = post.data;
         }
       </div>
     </header>
-
-    <Content />
+    <div class="markdown-content">
+      <Content />
+    </div>
   </article>
 </Root>
 
@@ -44,11 +45,13 @@ const { title, publishedAt } = post.data;
   .container {
     width: min(100% - 2rem, 70ch);
     margin-inline: auto;
+    padding: 2rem 0;
   }
 
   .header {
     display: grid;
     place-items: center;
+    margin-bottom: 3rem;
   }
 
   .header .title {
@@ -56,12 +59,18 @@ const { title, publishedAt } = post.data;
     font-weight: bold;
     color: var(--default-text-color);
   }
+
   .meta {
     display: flex;
     gap: 1rem;
-    margin: 1rem 0 2rem;
+    margin: 1rem 0 0;
     font-size: 0.9rem;
     color: var(--default-text-color);
     opacity: 0.8;
+  }
+
+  /* 마크다운 콘텐츠 컨테이너 추가 스타일 */
+  .markdown-content {
+    margin-top: 1rem;
   }
 </style>

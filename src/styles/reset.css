@@ -1,4 +1,4 @@
-/* http://meyerweb.com/eric/tools/css/reset/ 
+/* http://meyerweb.com/eric/tools/css/reset/
    v2.0 | 20110126
    License: none (public domain)
 */
@@ -111,6 +111,12 @@ body {
 ol,
 ul {
   list-style: none;
+}
+
+/* 마크다운 콘텐츠 내부의 목록은 기본 스타일 유지 */
+.markdown-content ol,
+.markdown-content ul {
+  list-style: revert;
 }
 blockquote,
 q {
