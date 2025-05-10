@@ -16,12 +16,30 @@ const getTitle = () => {
 };
 ---
 
-<html>
+<html lang={SITE.defaultLanguage}>
   <head>
     <meta charset="utf-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
+    <meta name="description" content={SITE.description} />
+    <meta name="author" content={SITE.author} />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={SITE.baseURL} />
+    <meta property="og:title" content={getTitle()} />
+    <meta property="og:description" content={SITE.description} />
+    <meta property="og:image" content={`${SITE.baseURL}/og-image.png`} />
+    <meta property="og:locale" content={SITE.defaultLanguage} />
+    <meta property="og:site_name" content={SITE.title} />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content={SITE.baseURL} />
+    <meta name="twitter:title" content={getTitle()} />
+    <meta name="twitter:description" content={SITE.description} />
+    <meta name="twitter:image" content={`${SITE.baseURL}/og-image.png`} />
     <link
       rel="preload"
       href="/fonts/AtkinsonHyperlegible-Regular.ttf"
