@@ -1,47 +1,28 @@
-# Astro Starter Kit: Minimal
+# Minimal Blog Template
 
-```sh
-npm create astro@latest -- --template minimal
+## How to use
+
+### 블로그 글 작성하기
+
+1. `src/content/notes` 디렉토리에 새로운 마크다운 파일을 생성합니다.
+2. 다음과 같은 형식으로 파일 상단에 frontmatter를 추가합니다:
+
+```markdown
+---
+title: "글 제목"
+publishedAt: 2025-05-10
+tags: ["태그1", "태그2"]
+---
+
+여기에 본문 내용을 작성합니다.
 ```
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/minimal)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/minimal)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/minimal/devcontainer.json)
+### 사이트 설정 변경하기
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+`src/config.ts` 파일을 수정하여 다음 설정을 변경할 수 있습니다:
 
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
-
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
-
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
-
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+- 사이트 제목
+- 사이트 설명
+- 기본 언어
+- 기본 URL
+- 작성자 이름
